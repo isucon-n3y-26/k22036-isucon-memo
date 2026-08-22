@@ -24,5 +24,5 @@ sudo truncate -s 0 ${ACCESS_LOG} && sudo chown syslog:adm ${ACCESS_LOG}
 3. alpによる集計
 
 ```sh
-sudo cat ${ACCESS_LOG} | '${ALP_BIN}' json --sort avg --output count,method,uri,min,max,sum,avg,p99"
+sudo cat ${ACCESS_LOG} | '${ALP_BIN}' json --sort avg --output count,method,uri,min,max,sum,avg,p99 --format md
 ```
