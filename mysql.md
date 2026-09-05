@@ -15,3 +15,17 @@ db.SetMaxOpenConns(100)
 db.SetMaxIdleConns(100)
 db.SetConnMaxLifetime(2 * time.Minute)
 ```
+## mysql conf
+
+```cnf
+# /etc/mysql/conf.d
+# COMMIT の fsync 律速を避けるための設定。
+[mysqld]
+# binlog 不要（レプリカ・PITR なし）のため無効化。COMMIT 毎の binlog fsync を消す
+skip-log-bin
+# redo flush を COMMIT 毎→1秒毎に。クラッシュ時は最大1秒分失う
+innodb_flush_log_at_trx_commit = 2
+# バッファプール (ホストRAM 4GB+ 想定。2GB以下の環境では引き下げること)
+innodb_buffer_pool_size = 1G
+
+```
